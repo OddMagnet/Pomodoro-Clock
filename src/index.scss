@@ -23,18 +23,24 @@ body {
         justify-content: center;
         align-items: center;
 
-        // Style title?
+        // title
+        .title {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
 
         // timer length control
         .length-control {
             width: 250px;
         }
+
         // general buttons stylings?
 
         // Stylings for Control buttons and length control
         .btn-control,
         .length-control {
             display: inline-block;
+
             // give the text inside the length control extra width
             .btn-control:nth-child(3) {
                 width: 40px;

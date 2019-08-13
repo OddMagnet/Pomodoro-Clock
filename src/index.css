@@ -24,6 +24,11 @@ body #root {
           align-items: center;
 }
 
+body #root .title {
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
 body #root .length-control {
   width: 250px;
 }
