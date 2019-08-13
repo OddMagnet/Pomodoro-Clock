@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TimerControl from './Components/TimerControl';
+import beep from './Ressources/beep-07.wav';
 
 class App extends Component {
   constructor(props) {
@@ -15,10 +16,15 @@ class App extends Component {
     }
   }
 
+  timerToClock = () => {
+    return "timerToClockTEST"
+  }
+
   render() {
     return (
       <div>
-        <h1>Pomodoro Clock</h1>
+        <h1 className='title'>Pomodoro Clock</h1>
+        {/* Control for break length */}
         <TimerControl
           subID='break-decrement'
           addID='break-increment'
@@ -27,6 +33,42 @@ class App extends Component {
           onClick={this.setBreakLength}
           title='Break Length'
           titleID='break-label'
+        />
+        {/* Control for session length */}
+        <TimerControl
+          subID='session-decrement'
+          addID='session-increment'
+          length={this.state.sessionLength}
+          lengthID='session-length'
+          onClick={this.setSessionLength}
+          title='session Length'
+          titleID='session-label'
+        />
+        {/* Timer, just shows the time*/}
+        <div className='timer' style={this.state.alarmColor}>
+          <div className='timer-wrapper'>
+            <div id='timer-label'>{this.state.timerType}</div>
+            <div id='time-left'>{this.timerToClock()}</div>
+          </div>
+        </div>
+        {/* Timer Control, Start/Pause and Reset */}
+        <div className='timer-control'>
+          <button id='start_stop' onClick={this.toggleTimer}>
+            <i className='fa fa-play fa-2x' />
+            <i className='fa fa-pause fa-2x' />
+          </button>
+          <button id='reset' onClick={this.resetTimer}>
+            <i className='fa fa-refresh fa-2x' />
+          </button>
+        </div>
+        {/* audio element for the beep sound */}
+        <audio
+          id='beep'
+          preload='auto'
+          ref={audio => {
+            this.playBeep = audio;
+          }}
+          src={beep}
         />
       </div>
     );
