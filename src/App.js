@@ -42,7 +42,7 @@ class App extends Component {
     this.state = {
       breakLength: 5,
       sessionLength: 25,
-      timerState: 'isStopped',  // 'isRunning'
+      timerRunning: false,      // true
       timerType: 'Session',     // 'Break'
       timer: 1500,              // timer in seconds, 25*60 = 1500
       intervalID: '',
@@ -59,6 +59,52 @@ class App extends Component {
     minutes = minutes < 10 ? '0' + minutes : minutes;
     // return the formated time
     return minutes + ':' + seconds;
+  }
+
+  // both setBreakLength and setSessionLength call the same function
+  // keep it DRY
+  setBreakLength = (event) => {
+    this.lengthControl(
+      'breakLength',              // which length will be adjusted
+      event.currentTarget.value,  // add or sub from the length
+      this.state.breakLength,     // the current length
+      'Break'                     // check current timerType against this
+                                  // to determine if timer needs reset
+    );
+  }
+  setSessionLength = (event) => {
+    this.lengthControl(
+      'sessionLength',
+      event.currentTarget.value,
+      this.state.sessionLength,
+      'Session'
+    );
+  }
+
+  // function to adjust timer length and reset timer if need be
+  lengthControl = (timerToChange, addsub, currentLength, timerType) => {
+    // no adjustments when timer is currently running
+    if (this.state.timerRunning) { return; }
+    // if active (but paused) timerType === timerType, then reset the timer
+    if (this.state.timerType === timerType) {
+      if (addsub === '-' && currentLength !== 1) {  // can't go below 1
+        this.setState({
+          [timerToChange]: currentLength - 1,
+          timer: currentLength * 60 - 60    // subtracting the minute
+        });
+      } else if (addsub === '+' && currentLength !== 60) {  // can't go above 60 either
+        this.setState({
+          [timerToChange]: currentLength + 1,
+          timer: currentLength * 60 + 60    // adding the minute
+        });
+      }
+    } else {  // time for the other timerType can be adjusted freely
+      if (addsub === '-' && currentLength !== 1) {
+        this.setState({ [timerToChange]: currentLength -1 })
+      } else if (addsub === '+' && currentLength !== 60) {
+        this.setState({ [timerToChange]: currentLength + 1 });
+      }
+    }
   }
 
   render() {
@@ -82,7 +128,7 @@ class App extends Component {
           length={this.state.sessionLength}
           lengthID='session-length'
           onClick={this.setSessionLength}
-          title='session Length'
+          title='Session Length'
           titleID='session-label'
         />
         {/* Timer, just shows the time*/}
