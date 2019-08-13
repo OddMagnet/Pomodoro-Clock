@@ -13,7 +13,7 @@ class TimerControl extends Component {
                     onClick={this.props.onClick}
                     value='-'
                 >
-                    <i class="fa fa-arrow-down fa-2x"></i>
+                    <i className="fa fa-arrow-down fa-2x"></i>
                 </button>
                 <div className='btn-control' id={this.props.lengthID}>
                     {this.props.length}
@@ -24,7 +24,7 @@ class TimerControl extends Component {
                     onClick={this.props.onClick}
                     value='+'
                 >
-                    <i class="fa fa-arrow-up fa-2x"></i>
+                    <i className="fa fa-arrow-up fa-2x"></i>
                 </button>
             </div>
         )
