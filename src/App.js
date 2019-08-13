@@ -107,6 +107,92 @@ class App extends Component {
     }
   }
 
+  // toggle timer between running and paused
+  toggleTimer = () => {
+    if (!this.state.timerRunning) {
+      this.startCountDown();
+      this.setState({ timerRunning: true });
+    } else {
+      this.setState({ timerRunning: false });
+      if (this.state.intervalID) {
+        this.state.intervalID.cancel();   // stop the pomoInterval
+      }
+    }
+  }
+  // start the countdown
+  startCountDown = () => {
+    this.setState({
+      intervalID: pomoInterval(() => {
+        this.decrementTimer();
+        this.phaseControl();
+      }, 1000)
+    });
+  }
+  // decreases timer by 1s
+  decrementTimer = () => {
+    this.setState({ timer: this.state.timer - 1 });
+  }
+
+  // handles last minute color, beeping and initiating the switch of phases
+  phaseControl = () => {
+    let timer = this.state.timer;
+    this.checkForLastMinute(timer);
+    this.beeper(timer);
+    if (timer < 0) {
+      // cancel interval when timer hits 0
+      if (this.state.intervalID) { this.state.intervalID.cancel(); }
+      // Start new Countdown
+      this.startCountDown();
+      // Check timerType, switch to the other one
+      if (this.state.timerType === 'Session') {
+        this.switchTimerType(this.state.breakLength * 60, 'Break');
+      } else {
+        this.switchTimerType(this.state.sessionLength * 60, 'Session');
+      }
+    }
+  }
+
+  // check if timer is in the last minute, if so change text color
+  checkForLastMinute = (t) => {
+    if (t < 61) { this.setState({ alarmColor: { color: '#a50d0d' } }); }
+    else { this.setState({ alarmColor: { color: 'white' } }) }
+  }
+
+  // play the beep if timer hits 0
+  beeper = (t) => {
+    if (t === 0) {
+      this.playBeep.play();
+    }
+  }
+
+  // switch timer to type with length
+  switchTimerType = (length, type) => {
+    this.setState({
+      timer: length,
+      timerType: type,
+      alarmColor: { color: 'white' }
+    });
+  }
+
+  // reset timer to default values
+  resetTimer = () => {
+    // reset state
+    this.setState({
+      breakLength: 5,
+      sessionLength: 25,
+      timerRunning: false,
+      timerType: 'Session',
+      timer: 1500,
+      intervalID: '',
+      alarmColor: { color: 'white' }
+    })
+    // make sure intervals are cancelled
+    if (this.state.intervalID) { this.state.intervalID.cancel() }
+    // make sure beep sounds are paused and reset the sound time
+    this.playBeep.pause();
+    this.playBeep.currentTime = 0;
+  }
+
   render() {
     return (
       <div>
