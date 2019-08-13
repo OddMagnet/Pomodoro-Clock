@@ -19,7 +19,15 @@ class App extends Component {
     return (
       <div>
         <h1>Pomodoro Clock</h1>
-        <TimerControl/>
+        <TimerControl
+          subID='break-decrement'
+          addID='break-increment'
+          length={this.state.breakLength}
+          lengthID='break-length'
+          onClick={this.setBreakLength}
+          title='Break Length'
+          titleID='break-label'
+        />
       </div>
     );
   }
