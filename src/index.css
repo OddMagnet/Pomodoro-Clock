@@ -33,6 +33,14 @@ body #root .length-control {
   width: 250px;
 }
 
+body #root button {
+  background: none;
+  outline: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
 body #root .btn-control,
 body #root .length-control {
   display: inline-block;
@@ -41,5 +49,29 @@ body #root .length-control {
 body #root .btn-control .btn-control:nth-child(3),
 body #root .length-control .btn-control:nth-child(3) {
   width: 40px;
+}
+
+body #root .timer {
+  border: 7px solid #13353a;
+  margin: 20px auto 10px auto;
+  width: 270px;
+  height: 160px;
+  border-radius: 50px;
+  position: relative;
+}
+
+body #root .timer .timer-wrapper {
+  position: absolute;
+  width: 190px;
+  height: 110px;
+  left: 50%;
+  top: 50%;
+  margin-left: -95px;
+  margin-top: -57px;
+}
+
+body #root .timer #time-left {
+  font-family: digital;
+  font-size: 80px;
 }
 /*# sourceMappingURL=index.css.map */
