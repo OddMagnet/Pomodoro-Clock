@@ -17,7 +17,14 @@ class App extends Component {
   }
 
   timerToClock = () => {
-    return "timerToClockTEST"
+    // calculate minutes and seconds
+    let minutes = Math.floor(this.state.timer / 60);
+    let seconds = this.state.timer % 60;
+    // Add extra 0's if needed
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    // return the formated time
+    return minutes + ':' + seconds;
   }
 
   render() {
