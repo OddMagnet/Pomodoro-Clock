@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TimerControl from './Components/TimerControl';
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class App extends Component {
     return (
       <div>
         <h1>Pomodoro Clock</h1>
+        <TimerControl/>
       </div>
     );
   }
