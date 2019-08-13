@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TimerControl from './Components/TimerControl';
-import beep from './Ressources/beep-07.wav';
+import beep from './Ressources/beep-06.wav';
 
 
 // Self adjusting timer
