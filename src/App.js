@@ -2,6 +2,40 @@ import React, { Component } from 'react';
 import TimerControl from './Components/TimerControl';
 import beep from './Ressources/beep-07.wav';
 
+
+// Self adjusting timer
+// Both setTimeout and setInterval are prone to piling up small bits of extra time
+// After some googling I found that most people use the Date() function to calculate
+// and correct the timer. 
+// Below is an interval function that calls a given function on a self adjusted timer
+// and returns a function to stop its execution
+const pomoInterval = (fn, intervalTime) => {
+  // define variables for the wrapper, cancel and timeout function
+  var wrapper, cancel, timeout = null;
+  // calculate next tick
+  var nextAt = new Date().getTime() + intervalTime;
+
+  // wrapper function that calls itself every tick, executing the given function
+  wrapper = () => {
+    nextAt += intervalTime;
+    timeout = setTimeout(wrapper, nextAt - new Date().getTime()); // self correcting every time
+    return fn();
+  }
+
+  // cancel function so the pomoInterval can be cancelled from outside
+  cancel = () => {
+    return clearTimeout(timeout);
+  }
+
+  // set the 1st timeout, starting the intervals
+  timeout = setTimeout(wrapper, nextAt - new Date().getTime());
+
+  // finally, return the cancel function
+  return {
+    cancel: cancel
+  }
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
