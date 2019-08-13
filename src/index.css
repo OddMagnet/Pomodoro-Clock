@@ -10,4 +10,31 @@ body {
   font-size: 30px;
   text-align: center;
 }
+
+body #root {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body #root .length-control {
+  width: 250px;
+}
+
+body #root .btn-control,
+body #root .length-control {
+  display: inline-block;
+}
+
+body #root .btn-control .btn-control:nth-child(3),
+body #root .length-control .btn-control:nth-child(3) {
+  width: 40px;
+}
 /*# sourceMappingURL=index.css.map */

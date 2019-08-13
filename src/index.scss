@@ -15,4 +15,30 @@ body {
     color: white;
     font-size: 30px;
     text-align: center;
+
+    // root, the container for everything
+    #root {
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+
+        // Style title?
+
+        // timer length control
+        .length-control {
+            width: 250px;
+        }
+        // general buttons stylings?
+
+        // Stylings for Control buttons and length control
+        .btn-control,
+        .length-control {
+            display: inline-block;
+            // give the text inside the length control extra width
+            .btn-control:nth-child(3) {
+                width: 40px;
+            }
+        }
+    }
 }
